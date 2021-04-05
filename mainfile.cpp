@@ -1,14 +1,15 @@
 #include<iostream>
-#include"fstream"               //For File Handling
-#include"windows.h"             //for changing colors and clear screen
-#include"stdio.h"               //Use for gets() function to taking all input from user
+#include<fstream>               //For File Handling
+#include<windows.h>             //for changing colors and clear screen
+#include<stdio.h>               //Use for gets() function to taking all input from user
+#include<string>
 using namespace std;
 struct Mobile                  //Struct for storing data\t
 {
     char mName[25];         //Get Mobile Name
     char IMEI[15];     //Get Seller ID Card Numer
-    float mPrice;           //Get Price
-    char searchM[25];       //variable for search
+    long mPrice;           //Get Price
+    // char searchM[25];       //variable for search
 };
 
 void banner()
@@ -79,9 +80,11 @@ int main(){
 
 	banner();       //Showing PF Banner, My Name and Roll Number 
     Mobile M;
-    ifstream fileOut("file.txt");              //Read from Files
-    ofstream fileIn("file.txt");               //Write on Files
-            
+    ifstream fileOut("file.dat");              //Read from Files
+    ofstream fileIn("file.dat");               //Write on Files
+    int n = 1;
+    char searchChar[25];
+
     while(true)
     {
         pName();        //Showing Project Name
@@ -96,13 +99,12 @@ int main(){
             Sleep(2000);
             system("CLS");
             // cout<<"Error!"<<endl;
-            ofstream file("file.txt");
+            ofstream file("file.dat");
             if (!file)
             {
                 cerr<<"File Still Not Created !!!!!"<<endl;
                 exit(1);
             }
-            
         }
 
         input:
@@ -115,7 +117,7 @@ int main(){
                 char op;
                 do{
                     cout<<"\t\t\tEnter Mobile Name: ";                          cin>>M.mName;
-                    cout<<"\t\t\tEnter Mobile IMEI: ";         cin>>M.IMEI;
+                    cout<<"\t\t\tEnter Mobile IMEI: ";         					cin>>M.IMEI;
                     cout<<"\t\t\tEnter Mobile Prize:";                           cin>>M.mPrice;
                     fileIn<<M.mName<<"\t"<<M.IMEI<<"\t"<<M.mPrice<<endl;
                     cout<<"\t\t\t\tMobile Added!"<<endl;
@@ -124,25 +126,63 @@ int main(){
                 fileIn.close();
                 break;
             case 2:
-                //
+                char searchChar[25];
+                cout<<"\t\t\tEnter Mobile Name for search: ";                   cin>>searchChar;
+                while (!fileOut.eof())
+                {
+                    fileOut.getline(getD, 150);
+                    cout<<"\t\t\t"<<getD<<endl;
+                    if (strcmp(searchChar,getD))
+                    {
+                        cout<<"Mobile Found!;"<<endl;
+                    }else{
+                        cout<<"Mobile not Found!"<<endl;
+                    }
+                    
+                }
                 break;
             case 3:
-
+                cout<<"\t\t\tNo. \tMobile\t   IMEI\t\tPrice"<<endl;
+                while (!fileOut.eof())
+                {
+                    fileOut.getline(getD, 150);
+                    cout<<"\t\t\t"<<n++<<"\t"<<getD<<endl;
+                }
+                cout<<"\t\t\tEnter Serial Number: ";          int se; cin>>se;
+                cout<<"\t\t\tEnter Monile Name: ";            cin>>M.mName;
+                if (M.mName == M.mName)
+                {
+                    cout<<"Record upadted!"<<endl;
+                }
+                fileOut.close();
+                fileOut.clear();
                 break;
             case 4:
                 cout<<fileOut.eof()<<endl;
-            	
                 cout<<"\t\t\tMobile\t   IMEI\t\tPrice"<<endl;
                 while (!fileOut.eof())
                 {
                     fileOut.getline(getD, 150);
                     cout<<"\t\t\t"<<getD<<endl;
                 }
-            fileOut.close();
+                fileOut.close();
+                fileOut.clear();            
                 break;
+
             case 5:
-    //            cout<<"\t\t\tEnter Mobile Name for search: ";                   cin>>M.searchM;
-                
+                cout<<"\t\t\tEnter IEMI for search: ";                   cin>>searchChar;
+                while (!fileOut.eof())
+                {
+                    fileOut.getline(getD, 150);
+                    cout<<"\t\t\t"<<getD<<endl;
+                    if (strcmp(searchChar,getD))
+                    {
+                        cout<<"Mobile Found!;"<<endl;
+                    }else{
+                        cout<<"Mobile not Found!"<<endl;
+                    }
+                    
+                }
                 break;
             case 6:
                 exit(0);
